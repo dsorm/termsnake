@@ -19,4 +19,5 @@
 * If the snake gets to the wall, it automatically climbs out of the opposite side.
 * If you bite yourself (the snake is going straight to the right and you suddenly press left arrow to go straight to left), the game will end. This is not a bug, this is by design.
 * The screencast has a bug - `head y` sometimes shows wrong number. This is now fixed.
+
 This task took me about 7 hours to complete.
