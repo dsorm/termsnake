@@ -76,12 +76,12 @@ func (s snakeField) count() uint {
 
 type gameState struct {
 	// The 2D board of the game
-	board [][]field // [x][y]int8
-	boardWidth uint
+	board       [][]field // [x][y]int8
+	boardWidth  uint
 	boardHeight uint
 
-	round    uint64
-	score    uint64
+	round uint64
+	score uint64
 
 	desiredSnakeLen uint // includes the head
 	snakeHead       *snakeField
@@ -89,7 +89,7 @@ type gameState struct {
 	userAction userAction
 
 	// context for breaking the game loop
-	appCtx context.Context
+	appCtx       context.Context
 	appCtxCancel func()
 }
 
@@ -161,12 +161,12 @@ func (gs *gameState) print() {
 			bgColor = termbox.ColorGreen
 		}
 		termbox.SetCell(field.pos.x*2, field.pos.y, '*', termbox.ColorDefault, bgColor)
-		termbox.SetCell((field.pos.x*2)+1, field.pos.y ,'*', termbox.ColorDefault, bgColor)
+		termbox.SetCell((field.pos.x*2)+1, field.pos.y, '*', termbox.ColorDefault, bgColor)
 		field = field.nextField
 	}
 
 	// print score, etc.
-	footer := fmt.Sprintf("Round: %v\n\rScore: %v\n\rSnake: length %v, head x %v, head y %v",
+	footer := fmt.Sprintf("Round: %v\n\rScore: %v\n\rSnake: length %v, head x %v, head y %v  ",
 		gs.round, gs.score, gs.desiredSnakeLen, gs.snakeHead.pos.x, gs.snakeHead.pos.y)
 	tbprint(0, int(gs.boardHeight), termbox.ColorDefault, termbox.ColorDefault, footer)
 
@@ -195,28 +195,28 @@ func (gs *gameState) keyPressListener() {
 	defer gs.appCtxCancel()
 	for {
 		select {
-			case <-gs.appCtx.Done():
-				return
-			default:
-				switch event := termbox.PollEvent(); event.Type {
-				case termbox.EventKey:
-					switch event.Key {
-					case termbox.KeyArrowUp:
-						gs.userAction = userActionUp
-					case termbox.KeyArrowLeft:
-						gs.userAction = userActionLeft
-					case termbox.KeyArrowRight:
-						gs.userAction = userActionRight
-					case termbox.KeyArrowDown:
-						gs.userAction = userActionDown
-					case termbox.KeyCtrlC, termbox.KeyCtrlZ, termbox.KeyCtrlX:
-						return
-					}
-				case termbox.EventInterrupt:
+		case <-gs.appCtx.Done():
+			return
+		default:
+			switch event := termbox.PollEvent(); event.Type {
+			case termbox.EventKey:
+				switch event.Key {
+				case termbox.KeyArrowUp:
+					gs.userAction = userActionUp
+				case termbox.KeyArrowLeft:
+					gs.userAction = userActionLeft
+				case termbox.KeyArrowRight:
+					gs.userAction = userActionRight
+				case termbox.KeyArrowDown:
+					gs.userAction = userActionDown
+				case termbox.KeyCtrlC, termbox.KeyCtrlZ, termbox.KeyCtrlX:
 					return
-				case termbox.EventError:
-					os.Exit(1)
 				}
+			case termbox.EventInterrupt:
+				return
+			case termbox.EventError:
+				os.Exit(1)
+			}
 
 		}
 
@@ -229,7 +229,7 @@ func (gs *gameState) newRound() {
 
 	// move the head forward
 	newSnakeHead := snakeField{
-		pos: gs.snakeHead.pos,
+		pos:       gs.snakeHead.pos,
 		nextField: gs.snakeHead,
 	}
 
@@ -237,12 +237,12 @@ func (gs *gameState) newRound() {
 	case userActionUp:
 		newSnakeHead.pos.y--
 		if newSnakeHead.pos.y == -1 {
-			newSnakeHead.pos.y = int(gs.boardHeight)-1
+			newSnakeHead.pos.y = int(gs.boardHeight) - 1
 		}
 	case userActionLeft:
 		newSnakeHead.pos.x--
 		if newSnakeHead.pos.x == -1 {
-			newSnakeHead.pos.x = int(gs.boardWidth)-1
+			newSnakeHead.pos.x = int(gs.boardWidth) - 1
 		}
 	case userActionRight:
 		newSnakeHead.pos.x++
@@ -329,8 +329,8 @@ func menu() *gameState {
 	}
 
 	if desiredWidth > termWidth/2 || desiredHeight > termHeight-3 {
-		fmt.Printf("Error: the desired dimensions are too large for your terminal!\n" +
-			"Your terminal size: %vx%v\n" +
+		fmt.Printf("Error: the desired dimensions are too large for your terminal!\n"+
+			"Your terminal size: %vx%v\n"+
 			"Your desired size: %vx%v\n", termWidth/2, termHeight-3, desiredWidth, desiredHeight)
 		os.Exit(2)
 	}
@@ -361,7 +361,7 @@ func main() {
 	go state.keyPressListener()
 
 	// main game loop
-	t := time.NewTicker(150*time.Millisecond)
+	t := time.NewTicker(150 * time.Millisecond)
 	state.newFood()
 	for {
 		select {
@@ -374,7 +374,7 @@ func main() {
 	}
 
 	// make sure we leave the terminal "clean"
-	exit:
+exit:
 	termbox.Close()
 	fmt.Println("Game over!")
 	fmt.Printf("Round: %v\tScore: %v\tSnake: length %v, head x %v, head y %v\n",
