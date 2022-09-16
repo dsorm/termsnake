@@ -3,7 +3,7 @@
 
 ## How to play
 - get the game:
-  - play with `docker run -it --rm ghcr.io/dsorm/termsnake`(if you have Docker)
+  - play with `docker run -it --rm ghcr.io/dsorm/termsnake:master`(if you have Docker)
   - download the binary from releases - https://github.com/dsorm/termsnake/releases
   - install with `go install github.com/dsorm/termsnake@latest`(if you have Go installed and properly configured)
 - enter your desired width and height of the snake board (must be bigger than 5x5 and must fit in your terminal window)
