@@ -25,3 +25,19 @@
 * The screencast has a bug - `head y` sometimes shows wrong number. This is now fixed.
 
 This task took me about 7 hours to complete.
+
+## How to build the project localy
+* This command will produce the game executable
+```bash
+make build
+```
+
+* This command will build and run the game
+```bash
+make run
+```
+
+* This command will remove build outputs
+```bash
+make clean
+```
