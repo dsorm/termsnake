@@ -26,7 +26,7 @@
 
 This task took me about 7 hours to complete.
 
-## How to build the project localy
+## How to build the project locally
 * This command will produce the game executable
 ```bash
 make build
