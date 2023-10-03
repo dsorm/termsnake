@@ -202,13 +202,21 @@ func (gs *gameState) keyPressListener() {
 			case termbox.EventKey:
 				switch event.Key {
 				case termbox.KeyArrowUp:
-					gs.userAction = userActionUp
+                    if gs.userAction != userActionDown {
+                        gs.userAction = userActionUp
+                    }
 				case termbox.KeyArrowLeft:
-					gs.userAction = userActionLeft
+                    if gs.userAction != userActionRight {
+                        gs.userAction = userActionLeft
+                    }
 				case termbox.KeyArrowRight:
-					gs.userAction = userActionRight
+                    if gs.userAction != userActionLeft {
+                        gs.userAction = userActionRight
+                    }
 				case termbox.KeyArrowDown:
-					gs.userAction = userActionDown
+                    if gs.userAction != userActionUp {
+                        gs.userAction = userActionDown
+                    }
 				case termbox.KeyCtrlC, termbox.KeyCtrlZ, termbox.KeyCtrlX:
 					return
 				}
